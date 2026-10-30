@@ -1,0 +1,24 @@
+model_id: faster_rcnn_baseline
+model_name: Faster R-CNN Baseline
+framework: torchvision
+architecture: fasterrcnn_resnet50_fpn
+checkpoint_path: weights/faster_rcnn_baseline.pt
+class_mapping:
+  - yolo_class_id: 0
+    faster_rcnn_class_id: 1
+    class_name: kurang masak
+  - yolo_class_id: 1
+    faster_rcnn_class_id: 2
+    class_name: masak
+  - yolo_class_id: 2
+    faster_rcnn_class_id: 3
+    class_name: mentah
+  - yolo_class_id: 3
+    faster_rcnn_class_id: 4
+    class_name: terlalu masak
+image_size: 640
+confidence_threshold: 0.05
+confidence_threshold_verified: true
+iou_threshold: null
+iou_threshold_verified: false
+device: auto

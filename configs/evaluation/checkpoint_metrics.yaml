@@ -1,0 +1,41 @@
+# Snapshot values read directly from the supplied checkpoints.
+# Percent fields use a 0-100 scale. Missing fields remain null.
+models:
+  yolo11_baseline:
+    source: checkpoint.train_metrics
+    source_note: Validation metrics embedded in the YOLO11 Baseline checkpoint (split=val); F1 is calculated from the recorded precision and recall.
+    checkpoint_date: '2026-10-30T13:21:41.420795+00:00'
+    metrics:
+      precision: 90.102
+      recall: 94.741
+      f1: 92.36328756836883
+      map50: 97.07
+      map5095: 75.694
+  yolo11_finetuned:
+    source: checkpoint.train_metrics
+    source_note: Validation metrics embedded in the YOLO11 Fine-Tuned checkpoint (split=val); F1 is calculated from the recorded precision and recall.
+    checkpoint_date: '2026-10-30T13:32:06.702795+00:00'
+    metrics:
+      precision: 90.852
+      recall: 94.81
+      f1: 92.78881106526914
+      map50: 97.295
+      map5095: 76.176
+  faster_rcnn_baseline:
+    source: checkpoint.val_metrics
+    source_note: Checkpoint includes mAP@0.5 and mAP@0.75. Precision, recall, F1, and mAP@0.5:0.95 are not mapped because they are absent or not explicitly identified in its metadata.
+    metrics:
+      precision: null
+      recall: null
+      f1: null
+      map50: 94.52666144404785
+      map5095: null
+  faster_rcnn_finetuned:
+    source: checkpoint.val_metrics
+    source_note: Checkpoint includes mAP@0.5 and mAP@0.75. Precision, recall, F1, and mAP@0.5:0.95 are not mapped because they are absent or not explicitly identified in its metadata.
+    metrics:
+      precision: null
+      recall: null
+      f1: null
+      map50: 94.68060884291571
+      map5095: null

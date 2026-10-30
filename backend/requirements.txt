@@ -1,0 +1,5 @@
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+python-multipart>=0.0.9,<1
+ultralytics==8.4.192
+# Install a CPU- or CUDA-compatible PyTorch build for the target machine separately.

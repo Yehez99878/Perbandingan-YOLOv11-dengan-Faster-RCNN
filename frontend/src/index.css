@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Hanken Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --color-palm: #15803d;
+  --color-palm-dark: #00652c;
+  --color-amber: #d97706;
+  --color-canvas: #f8f9ff;
+  --color-ink: #0b1c30;
+  --color-muted: #64748b;
+  --color-line: #e2e8f0;
+}
+
+:root { font-family: var(--font-body); color: #0b1c30; background: #f8f9ff; font-synthesis: none; text-rendering: optimizeLegibility; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 360px; min-height: 100vh; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #bbf7d0; color: #14532d; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }

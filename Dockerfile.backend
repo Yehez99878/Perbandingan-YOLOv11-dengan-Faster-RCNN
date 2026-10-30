@@ -1,0 +1,26 @@
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    APP_ENV=production
+
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt /tmp/requirements.txt
+RUN python -m pip install --no-cache-dir --upgrade pip \
+    && python -m pip install --no-cache-dir torch==2.15.0+cpu torchvision==0.29.2+cpu \
+       --index-url https://download.pytorch.org/whl/cpu \
+    && python -m pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY backend /app/backend
+COPY configs /app/configs
+
+# Mount the four supplied checkpoints at /app/weights at runtime.
+VOLUME ["/app/weights"]
+
+EXPOSE 8000
+CMD ["sh", "-c", "uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port ${PORT:-8000}"]

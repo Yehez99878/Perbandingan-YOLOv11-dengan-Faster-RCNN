@@ -1,0 +1,25 @@
+model_id: yolo11_finetuned
+model_name: YOLO11 Fine-Tuned
+framework: ultralytics
+model_variant: yolo11s
+checkpoint_path: weights/yolo11_finetuned.pt
+class_mapping:
+  - yolo_class_id: 0
+    faster_rcnn_class_id: 1
+    class_name: kurang masak
+  - yolo_class_id: 1
+    faster_rcnn_class_id: 2
+    class_name: masak
+  - yolo_class_id: 2
+    faster_rcnn_class_id: 3
+    class_name: mentah
+  - yolo_class_id: 3
+    faster_rcnn_class_id: 4
+    class_name: terlalu masak
+image_size: 640
+confidence_threshold: null
+confidence_threshold_verified: false
+iou_threshold: 0.7
+iou_threshold_source: checkpoint.train_args
+device: auto
+checkpoint_ultralytics_version: 8.4.193
