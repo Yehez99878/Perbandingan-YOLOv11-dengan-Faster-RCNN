@@ -40,11 +40,12 @@ Pengaturan saat membuat aplikasi di Streamlit Community Cloud:
 | Repository | `Yehez99878/Perbandingan-YOLOv11-dengan-Faster-RCNN` |
 | Branch | `main` |
 | Main file path | `streamlit_app.py` |
-| Dependency file | `requirements.txt` di root proyek |
+| Python dependency file | `requirements.txt` di root proyek |
+| System packages | `packages.txt` di root proyek (`libgl1`, `libglib2.0-0`) |
 
 Keempat checkpoint (`weights/*.pt`, sekitar 550 MB total) sudah dilacak dengan Git LFS dan objek LFS-nya sudah diunggah ke repository publik. Karena repository publik, siapa pun dapat mengunduh bobot tersebut. Clone/deploy perlu mengambil objek LFS, bukan hanya file pointer kecil. Aplikasi memberi status `Pointer Git LFS` jika yang terbaca masih pointer; inference tidak dapat dijalankan sampai file checkpoint sebenarnya tersedia.
 
-Root `requirements.txt` mengunci Streamlit dan build CPU PyTorch/Torchvision. Tidak diperlukan FastAPI, database, atau secret untuk menjalankan konfigurasi ini. Jangan menambahkan token GitHub ke source code. Pengambilan checkpoint oleh runtime memakai bandwidth Git LFS; pantau kuota pemilik repository jika aplikasi sering dibuka.
+Root `requirements.txt` mengunci Streamlit dan build CPU PyTorch/Torchvision. `packages.txt` memasang pustaka sistem OpenGL dan GLib yang dibutuhkan OpenCV saat Ultralytics diimpor pada Linux. Tidak diperlukan FastAPI, database, atau secret untuk menjalankan konfigurasi ini. Jangan menambahkan token GitHub ke source code. Pengambilan checkpoint oleh runtime memakai bandwidth Git LFS; pantau kuota pemilik repository jika aplikasi sering dibuka.
 
 Setelah membuat aplikasi, tunggu proses instalasi dependency selesai. Buka log deployment jika build gagal; jika aplikasi hidup tetapi checkpoint menunjukkan `Pointer Git LFS` atau `Belum tersedia`, periksa pengambilan LFS dan log checkout sebelum mencoba inference. Streamlit Community Cloud menyediakan hosting gratis, tetapi resource, waktu aktif, dan batas penggunaan dapat berubah. Inference CPU kemungkinan lebih lambat daripada lokal/CUDA.
 
