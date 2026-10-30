@@ -73,10 +73,15 @@ def read_checkpoint_metrics() -> dict[str, Any]:
     return content.get("models", {}) if isinstance(content, dict) else {}
 
 
-def checkpoint_status(registry: YoloRegistry, model_id: str) -> tuple[bool, str]:
+def checkpoint_status(registry: YoloRegistry, model_id: str) -> tuple[str, str]:
     adapter = registry.adapters[model_id]
     path = adapter.config.checkpoint_path
-    return path.is_file(), str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path)
+    relative_path = str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path)
+    if not path.is_file():
+        return "Belum tersedia", relative_path
+    with path.open("rb") as checkpoint_file:
+        is_lfs_pointer = checkpoint_file.read(128).startswith(b"version https://git-lfs.github.com/spec/v1")
+    return ("Pointer Git LFS" if is_lfs_pointer else "Tersedia"), relative_path
 
 
 def display_metric(value: Any) -> str:
@@ -134,12 +139,12 @@ with comparison_tab:
         details = MODEL_DETAILS[model_id]
         snapshot = metrics_snapshot.get(model_id, {})
         values = snapshot.get("metrics", {})
-        available, _ = checkpoint_status(registry, model_id)
+        checkpoint_state, _ = checkpoint_status(registry, model_id)
         metric_rows.append(
             {
                 "Model": MODEL_NAMES[model_id],
                 "Framework": details[2],
-                "Checkpoint": "Tersedia" if available else "Belum tersedia",
+                "Checkpoint": checkpoint_state,
                 **{label: display_metric(values.get(key)) for key, label in METRIC_COLUMNS},
             }
         )

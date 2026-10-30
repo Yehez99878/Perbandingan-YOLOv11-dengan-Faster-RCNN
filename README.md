@@ -33,8 +33,8 @@ Pastikan empat checkpoint tersedia di `weights/` dengan nama:
 
 1. Hubungkan repository GitHub dan pilih `streamlit_app.py` sebagai entry point.
 2. Root `requirements.txt` mengunci dependency Streamlit serta build CPU PyTorch/Torchvision.
-3. Sediakan checkpoint pada runtime secara terpisah. Folder `weights/` sengaja diabaikan Git dan berukuran sekitar 550 MB total; jangan commit bobot besar ke repository biasa.
-4. Atur visibility dan akses penyimpanan model sesuai kebutuhan kelompok. Jika menggunakan token/secret untuk penyimpanan file, simpan sebagai secret platform, jangan di kode atau Git.
+3. Checkpoint berukuran sekitar 550 MB total. File `.pt` ditandai untuk Git LFS melalui `.gitattributes`; file tetap belum dimasukkan ke Git. GitHub Free membatasi file Git biasa sampai 100 MiB, sementara Git LFS memberi kuota gratis 10 GiB storage dan 10 GiB bandwidth. Setiap download oleh runtime deployment memakai bandwidth LFS.
+4. Repository ini public. Jika checkpoint dimasukkan ke LFS di repository ini, siapa pun dapat mengunduh bobot model tersebut. Pastikan runtime Streamlit mengambil objek LFS yang sebenarnya sebelum menjalankan inference; file pointer LFS saja tidak cukup. Simpan token hanya sebagai secret platform, jangan di kode atau Git.
 
 Streamlit Community Cloud menyediakan hosting gratis, tetapi ketersediaan resource dan waktu aktif dapat berubah. Uji model di environment target; inference CPU dapat lebih lambat. Deploy kode saja tanpa menyiapkan empat checkpoint akan menampilkan status bobot belum tersedia dan tidak dapat menjalankan inference.
 
