@@ -31,12 +31,22 @@ Pastikan empat checkpoint tersedia di `weights/` dengan nama:
 
 ## Deployment Streamlit Community Cloud
 
-1. Hubungkan repository GitHub dan pilih `streamlit_app.py` sebagai entry point.
-2. Root `requirements.txt` mengunci dependency Streamlit serta build CPU PyTorch/Torchvision.
-3. Checkpoint berukuran sekitar 550 MB total. File `.pt` ditandai untuk Git LFS melalui `.gitattributes`; file tetap belum dimasukkan ke Git. GitHub Free membatasi file Git biasa sampai 100 MiB, sementara Git LFS memberi kuota gratis 10 GiB storage dan 10 GiB bandwidth. Setiap download oleh runtime deployment memakai bandwidth LFS.
-4. Repository ini public. Jika checkpoint dimasukkan ke LFS di repository ini, siapa pun dapat mengunduh bobot model tersebut. Pastikan runtime Streamlit mengambil objek LFS yang sebenarnya sebelum menjalankan inference; file pointer LFS saja tidak cukup. Simpan token hanya sebagai secret platform, jangan di kode atau Git.
+Repository GitHub: <https://github.com/Yehez99878/Perbandingan-YOLOv11-dengan-Faster-RCNN>
 
-Streamlit Community Cloud menyediakan hosting gratis, tetapi ketersediaan resource dan waktu aktif dapat berubah. Uji model di environment target; inference CPU dapat lebih lambat. Deploy kode saja tanpa menyiapkan empat checkpoint akan menampilkan status bobot belum tersedia dan tidak dapat menjalankan inference.
+Pengaturan saat membuat aplikasi di Streamlit Community Cloud:
+
+| Pengaturan | Nilai |
+| --- | --- |
+| Repository | `Yehez99878/Perbandingan-YOLOv11-dengan-Faster-RCNN` |
+| Branch | `main` |
+| Main file path | `streamlit_app.py` |
+| Dependency file | `requirements.txt` di root proyek |
+
+Keempat checkpoint (`weights/*.pt`, sekitar 550 MB total) sudah dilacak dengan Git LFS dan objek LFS-nya sudah diunggah ke repository publik. Karena repository publik, siapa pun dapat mengunduh bobot tersebut. Clone/deploy perlu mengambil objek LFS, bukan hanya file pointer kecil. Aplikasi memberi status `Pointer Git LFS` jika yang terbaca masih pointer; inference tidak dapat dijalankan sampai file checkpoint sebenarnya tersedia.
+
+Root `requirements.txt` mengunci Streamlit dan build CPU PyTorch/Torchvision. Tidak diperlukan FastAPI, database, atau secret untuk menjalankan konfigurasi ini. Jangan menambahkan token GitHub ke source code. Pengambilan checkpoint oleh runtime memakai bandwidth Git LFS; pantau kuota pemilik repository jika aplikasi sering dibuka.
+
+Setelah membuat aplikasi, tunggu proses instalasi dependency selesai. Buka log deployment jika build gagal; jika aplikasi hidup tetapi checkpoint menunjukkan `Pointer Git LFS` atau `Belum tersedia`, periksa pengambilan LFS dan log checkout sebelum mencoba inference. Streamlit Community Cloud menyediakan hosting gratis, tetapi resource, waktu aktif, dan batas penggunaan dapat berubah. Inference CPU kemungkinan lebih lambat daripada lokal/CUDA.
 
 ## Struktur penting
 
